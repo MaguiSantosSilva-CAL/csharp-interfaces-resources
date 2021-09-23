@@ -6,7 +6,8 @@ namespace Polygons.Library
     {
         public Triangle(int length) :
             base(3, length)
-        { }
+        {
+        }
 
         public override double GetArea()
         {

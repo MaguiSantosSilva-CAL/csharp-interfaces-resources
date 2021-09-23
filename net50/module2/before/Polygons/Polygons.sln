@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29326.143
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Polygons", "Polygons\Polygons.csproj", "{98ABDB9B-74CE-4FD3-A18C-E82EF82A0E13}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Polygons.Library", "Polygons.Library\Polygons.Library.csproj", "{F4D57B94-5054-4739-AFD5-FFADFE8F7E65}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Polygons.Library", "Polygons.Library\Polygons.Library.csproj", "{F4D57B94-5054-4739-AFD5-FFADFE8F7E65}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
