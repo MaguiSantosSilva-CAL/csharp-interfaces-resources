@@ -2,140 +2,19 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using System.Text;
 
 namespace Polygons
 {
     public class Program : Access
     {
-        public static void Login()
-        {
-            // Console.WriteLine(access.GetType());  // same as  Console.WriteLine(accessType);
-            if (!UserIsLoggedIn) Console.WriteLine("Please log in to continue.");
-
-            Console.Write("Username: ");            var username = Console.ReadLine();
-            Console.Write("Password: ");            var password = GetHiddenConsoleInput();
-            Console.WriteLine();
-
-            var builder = new SqlConnectionStringBuilder(GetConnectionString())
-            {
-                ConnectionString = "server=(local);user id=polygonSys;password=bareminimum;"
-            };
-            
-            var sqlConnection = new SqlConnection(builder.ConnectionString);
-
-            if (sqlConnection.State == ConnectionState.Closed)
-            {
-                try
-                {
-                    sqlConnection.Open();
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                    Console.WriteLine("Connection State {0}", sqlConnection.State);
-                }
-            }
-
-            using (sqlConnection)
-            {
-                var userInformationFromDatabase = string.Empty;
-                //var cmd = new SqlCommand("SELECT information from polygon.users where username = @Username and pwd = CONVERT(binary,@Password);", sqlConnection);
-                var cmd = new SqlCommand("exec usp_userLoginSuccessful @Username, @password", sqlConnection);
-
-                //cmd.Parameters.AddWithValue("@Username", username); 
-                //cmd.Parameters.AddWithValue("@Password", password); //This didn't work because C# passes UTF16 string which converts differently into binary; Latin1 is UTF8.
-
-                cmd.Parameters.AddWithValue("@Username", username);
-                cmd.Parameters.Add("@Password", SqlDbType.NVarChar);   //VarChar is UTF8
-                cmd.Parameters["@Password"].Value = password;
-
-                SqlDataReader sqlDataReader;
-                var connectionSuccessful = false;
-
-                try
-                {
-                    sqlDataReader = cmd.ExecuteReader();
-                    connectionSuccessful = true;
-
-                    var access = new Access() { SessionID = Access.GetNext() };
-                    Console.WriteLine("Session ID: " + access.SessionID);
-
-                    while (sqlDataReader.Read())
-                    {
-                        UserIsLoggedIn = true;
-
-                        userInformationFromDatabase = sqlDataReader.IsDBNull(0) ? "No Results" : sqlDataReader.GetString(0);
-                        
-                        cmd.Dispose();
-                        //var userLoginScript = new SqlCommand("exec usp_userLoginSuccessful @Username, @password;", sqlConnection);
-                        //userLoginScript.Parameters.AddWithValue("@Username", username);
-                        //userLoginScript.Parameters.Add("@Password", SqlDbType.VarChar);
-                        //userLoginScript.Parameters["@Password"].Value = password;
-
-                        //userLoginScript.ExecuteReader();
-
-                    }
-
-                    sqlDataReader.Close();
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
-                        
-
-                if (UserIsLoggedIn)
-                {
-                    Console.WriteLine("Login Successful");
-                    Console.WriteLine("Your Information:");
-                    Console.WriteLine(userInformationFromDatabase);
-                }
-                else
-                {
-                    Console.WriteLine("Login Failed for " + username + " ({0})", password);
-                    Console.WriteLine(cmd.CommandText);
-                    Console.WriteLine();                    
-                    if (!connectionSuccessful) Console.WriteLine(cmd.ExecuteNonQuery());
-
-                }
-            }
-
-            Console.WriteLine("Connection State {0}", sqlConnection.State);
-        }
-
-        private static string GetHiddenConsoleInput()
-        {
-            var input = new StringBuilder();
-            while (true)
-            {
-                var key = Console.ReadKey(true);
-                if (key.Key == ConsoleKey.Enter) break;
-                if (key.Key == ConsoleKey.Backspace && input.Length > 0) input.Remove(input.Length - 1, 1);
-                else if (key.Key != ConsoleKey.Backspace) input.Append(key.KeyChar);
-            }
-            return input.ToString();
-        }
-
-        private static string GetConnectionString()
-        {
-            // To avoid storing the connection string in your code,
-            // you can retrieve it from a configuration file.
-            return "Server=//localhost/./CALALONPC473" +
-                   "Initial Catalog=maguiss";
-        }
-
         public static void Main(string[] args)
         {
-            var polygonTypes = new List<PolygonType>()
+            var polygonType = new List<PolygonType>()
             {
-                new PolygonType() {Sides = "4", Name = "square"},
-                new PolygonType() {Sides = "3", Name = "triangle"},
-                new PolygonType() {Sides = "8", Name = "octagon"}
+                new PolygonType() {Sides = 4, Name = "square"},
+                new PolygonType() {Sides = 3, Name = "triangle"},
+                new PolygonType() {Sides = 8, Name = "octagon"}
             };
-
                        
             Login();
             while (!UserIsLoggedIn)
@@ -150,12 +29,13 @@ namespace Polygons
             string? polygonChoice = Console.ReadLine();
 
             Console.Write("Side Length:");
-            string? polygonSideLength = Console.ReadLine();
+            string? sideLengthInput = Console.ReadLine();
 
-            var polygonLengthOverride = String.IsNullOrWhiteSpace(polygonSideLength);
+            var polygonLengthOverride = String.IsNullOrWhiteSpace(sideLengthInput);
+            var polygonSideLength = polygonLengthOverride ? 5 : Convert.ToInt32(sideLengthInput);
+
             if (polygonLengthOverride)
-            {
-                polygonSideLength = "5";
+            {               
                 Console.WriteLine("Invalid or null side length provided. {0} assigned as side length.", polygonSideLength);
             }
 
@@ -167,17 +47,18 @@ namespace Polygons
                 Console.WriteLine("No value provided. '{0}' assigned as polygon type", polygonChoice);
             }
 
-            var polygonRecognised = CheckPolygon(polygonChoice, polygonTypes);
+            var polygonRecognised = CheckPolygon(polygonChoice, polygonType);
 
             if (!polygonRecognised)
             {
                 Console.Write("How many sides? ");
-                string ? polygonSides = Console.ReadLine();
+                string? polygonSides = Console.ReadLine();
                 if (!String.IsNullOrWhiteSpace(polygonSides))
                 {
-                    new PolygonType() { Name = polygonChoice, Sides = polygonSides };
-                    PolygonType polygonNew = new() { Name = polygonChoice, Sides = polygonSides };
-                    CheckPolygon(polygonNew.Name, polygonTypes);
+                    var polygonNew = new PolygonType() { Name = polygonChoice, Sides = Convert.ToInt32(polygonSides) };
+                    CheckPolygon(polygonNew.Name, polygonType);
+                    Console.WriteLine("Sides: {0}, Length: {1}, Area: {2}",polygonNew.Sides, polygonNew.Length, polygonNew.GetArea());
+
                 }
             }
 
@@ -205,7 +86,6 @@ namespace Polygons
             {
                 if (polygon.Name == polygonChoice)
                 {
-                    sideCount = polygon.Sides;
                     polygonChoiceNotes = "";
                     polygonFoundIndicator = true;
                 }
@@ -245,12 +125,7 @@ namespace Polygons
         }
     } // Program
 
-    public class PolygonType 
-    {
-        public string Sides { get; set; }
-        public string Name { get; set; }
-        public int? Length { get; set; }
-    }
+
 
 
 
