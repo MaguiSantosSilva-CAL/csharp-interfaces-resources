@@ -12,76 +12,93 @@ namespace Polygons
     {
         public static void Login()
         {
-            var access = new Access() { SessionID = Access.GetNext() };
-            
             // Console.WriteLine(access.GetType());  // same as  Console.WriteLine(accessType);
-        
             if (!UserIsLoggedIn) Console.WriteLine("Please log in to continue.");
 
-            var info = string.Empty;
-
-            Console.Write("Username: ");
-            var username = Console.ReadLine();
-            Console.Write("Password: ");
-            var password = GetHiddenConsoleInput();
+            Console.Write("Username: ");            var username = Console.ReadLine();
+            Console.Write("Password: ");            var password = GetHiddenConsoleInput();
             Console.WriteLine();
 
-            var builder = new SqlConnectionStringBuilder(GetConnectionString());
-            builder.ConnectionString = "server=(local);user id=polygonSys;password=bareminimum";
+            var builder = new SqlConnectionStringBuilder(GetConnectionString())
+            {
+                ConnectionString = "server=(local);user id=polygonSys;password=bareminimum;"
+            };
+            
             var sqlConnection = new SqlConnection(builder.ConnectionString);
 
-            try
+            if (sqlConnection.State == ConnectionState.Closed)
             {
-                sqlConnection.Open();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                Console.WriteLine("Connection State {0}", sqlConnection.State);
+                try
+                {
+                    sqlConnection.Open();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    Console.WriteLine("Connection State {0}", sqlConnection.State);
+                }
             }
 
             using (sqlConnection)
             {
-                var cmd = new SqlCommand("SELECT information from polygon.users where username = @Username and pwd = CONVERT(binary,@Password);", sqlConnection);
-                
-                var usernameParameter = "@Username";
-                var passwordParameter = "@Password";
-                cmd.Parameters.AddWithValue(usernameParameter, username);
-                cmd.Parameters.AddWithValue(passwordParameter, password);
+                var userInformationFromDatabase = string.Empty;
+                //var cmd = new SqlCommand("SELECT information from polygon.users where username = @Username and pwd = CONVERT(binary,@Password);", sqlConnection);
+                var cmd = new SqlCommand("exec usp_userLoginSuccessful @Username, @password", sqlConnection);
 
-                var sqlDataReader = cmd.ExecuteReader();
+                //cmd.Parameters.AddWithValue("@Username", username); 
+                //cmd.Parameters.AddWithValue("@Password", password); //This didn't work because C# passes UTF16 string which converts differently into binary; Latin1 is UTF8.
+
+                cmd.Parameters.AddWithValue("@Username", username);
+                cmd.Parameters.Add("@Password", SqlDbType.NVarChar);   //VarChar is UTF8
+                cmd.Parameters["@Password"].Value = password;
+
+                SqlDataReader sqlDataReader;
+                var connectionSuccessful = false;
 
                 try
                 {
-                    using (sqlDataReader)
+                    sqlDataReader = cmd.ExecuteReader();
+                    connectionSuccessful = true;
+
+                    var access = new Access() { SessionID = Access.GetNext() };
+                    Console.WriteLine("Session ID: " + access.SessionID);
+
+                    while (sqlDataReader.Read())
                     {
-                        while (sqlDataReader.Read())
-                        {
-                            UserIsLoggedIn = true;
-                            info = sqlDataReader.GetString(0);
-                            if (String.IsNullOrWhiteSpace(info)) info = "No Records Found";
-                        }
+                        UserIsLoggedIn = true;
+
+                        userInformationFromDatabase = sqlDataReader.IsDBNull(0) ? "No Results" : sqlDataReader.GetString(0);
+                        
+                        cmd.Dispose();
+                        //var userLoginScript = new SqlCommand("exec usp_userLoginSuccessful @Username, @password;", sqlConnection);
+                        //userLoginScript.Parameters.AddWithValue("@Username", username);
+                        //userLoginScript.Parameters.Add("@Password", SqlDbType.VarChar);
+                        //userLoginScript.Parameters["@Password"].Value = password;
+
+                        //userLoginScript.ExecuteReader();
+
                     }
+
+                    sqlDataReader.Close();
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
                 }
+                        
 
                 if (UserIsLoggedIn)
                 {
                     Console.WriteLine("Login Successful");
                     Console.WriteLine("Your Information:");
-                    Console.WriteLine(info);
+                    Console.WriteLine(userInformationFromDatabase);
                 }
                 else
                 {
-                    Console.WriteLine("Login Failed");
-                    Console.WriteLine(username);
-                    Console.WriteLine(password);
-                    Console.WriteLine();                    
-                    Console.WriteLine(cmd.ExecuteNonQuery());
+                    Console.WriteLine("Login Failed for " + username + " ({0})", password);
                     Console.WriteLine(cmd.CommandText);
+                    Console.WriteLine();                    
+                    if (!connectionSuccessful) Console.WriteLine(cmd.ExecuteNonQuery());
 
                 }
             }
