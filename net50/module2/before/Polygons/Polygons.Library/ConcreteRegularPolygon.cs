@@ -20,6 +20,7 @@ namespace Polygons.Library
 
         public virtual double GetArea()
         {
+            Console.WriteLine("This isn't implemented in the concrete regular polygon class");
             throw new NotImplementedException();
         }
     }

@@ -13,6 +13,14 @@ namespace Polygons.Library
         public int Length { get; set; }
         public int Area { get; set; }
 
+        public void makeNewShape(string userSelectedShapeName, int userSelectedNumberOfSides)
+        {
+            var polygonType = new List<PolygonType>()
+            {
+                new PolygonType() {Sides = userSelectedNumberOfSides, Name = userSelectedShapeName}                
+            };
+        }
+
         public int GetArea()
         {
             Area = (Convert.ToInt32(Sides) * Length);
