@@ -1,7 +1,10 @@
 ﻿using Polygons.Library;
 using System;
 using System.Linq;
+using System.Diagnostics;
+using System.IO;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Polygons
 {
@@ -22,32 +25,67 @@ namespace Polygons
                 Login();
             }
 
-            Console.WriteLine("" +
-                "*/*/*/*/ I <3 P O L Y G O N S */*/*/*/" +
-                "");
-            
-            Console.Write("Polygon type:");
+                        
+            Console.Write("Polygon name:");
             _ = TryCleanse(
                 inputValues: Console.ReadLine(),
                 "square",
-                cleansedInput: out string polygonName);
+                cleansedInput: out string? polygonName);
                         
-            var polygonRecognised = CheckPolygon(polygonName, polygonType);
 
             Console.Write("Side Length:");
-            _ = TryCleanse(Console.ReadLine(), 5, out var polygonSideLength);
-                        
-            if (!polygonRecognised)
+            _ = TryCleanse(
+                Console.ReadLine(),
+                5,
+                out int polygonSideLength);
+
+            int polygonSideCount;
+            
+            if (!PolygonType.PolygonExists(polygonName, polygonType))
             {
                 Console.Write("How many sides? ");
-                
-                _ = TryCleanse<int>(Console.ReadLine(), 6, out var polygonSideCount);
-                                
-                var polygonNew = new PolygonType() { Name = polygonName, Sides = polygonSideCount, Length = polygonSideLength};
-                CheckPolygon(polygonNew.Name, polygonType);
-                Console.WriteLine("Sides: {0}, Length: {1}, Area: {2}",polygonNew.Sides, polygonNew.Length, polygonNew.GetArea());
+
+                _ = TryCleanse<int>(
+                    Console.ReadLine(),
+                    6,
+                    out polygonSideCount);
+            }
+            else
+            {
+                polygonSideCount = 0; //TODO
             }
 
+            PolygonType userPolygon = PolygonType.MakeNewShape(polygonName, polygonSideCount, polygonSideLength);   
+            string polygonChoiceNotes = "(unknown)";
+
+            if (PolygonType.PolygonExists(userPolygon.Name, polygonType))
+            {
+                polygonChoiceNotes = "";
+                PolygonType.DisplayPolygon(userPolygon.Name, polygonName);
+            }
+                                    
+            var outputText = Convert.ToString(DateTime.Now) + ";\t" + Convert.ToString(userPolygon.Sides) + ";\t" + Convert.ToString(userPolygon.Length) + ";\t" + Convert.ToString(userPolygon.GetArea()) + ";\t" + Username + ";\t" + userPolygon.Name + polygonChoiceNotes + ";\n";
+
+            Console.WriteLine(outputText);
+
+            var logFilePath = "C:\\Users\\maguiss\\Documents\\GitHub\\csharp-interfaces-resources\\net50\\module2\\before\\Polygons\\Output.log";
+            
+            if (!File.Exists(logFilePath))
+            {
+                Console.WriteLine("Log created at: {0}", logFilePath);
+                File.AppendAllText(logFilePath,"Timestamp\t\tSides\tLength\tArea\tUser\tPolygon\n");
+            }
+            
+            File.AppendAllText(logFilePath, outputText);
+            
+            foreach (var line in File.ReadAllLines(logFilePath))
+            {
+                Console.WriteLine(line);
+            };
+
+
+            Console.ReadKey(true);
+            Console.Clear();
             //var square = new Square(5);
             //DisplayPolygon("Square", square);
 
@@ -85,18 +123,20 @@ namespace Polygons
                 return false;                
             }
 
-            Console.WriteLine("Type of T: " + typeof(T));
-            
-            try
+            var type = typeof(T);
+            var converter = TypeDescriptor.GetConverter(type);
+
+            if (converter != null && converter.IsValid(inputValues))
             {
-                //cleansedInput = inputValues;
+                cleansedInput = (T?)converter.ConvertFromString(inputValues);
+                return true;
             }
-            catch
+            else
             {
-                return false;
+                cleansedInput = defaultChoice;
             }
 
-            return true;
+            return false;
             
             #region
             //dynamic outputValue;
@@ -127,67 +167,9 @@ namespace Polygons
 
         }
 
-        public static bool CheckPolygon(string polygonChoice, List<PolygonType> polygonTypeList)
-        {
-            dynamic polygonType = polygonChoice;
+        
 
-            try
-            {
-                polygonType.GetArea();
-            }
-            catch
-            {
-                Console.WriteLine("Polygone {0} is of unknown type.", Convert.ToString(polygonType).ToLower());
-            }
-
-            polygonChoice = polygonChoice.ToLower();
-
-            var sideCount = "an unknown number";
-            var polygonChoiceNotes = " is unknown";
-
-            var polygonFoundIndicator = false;
-
-            foreach (var polygon in polygonTypeList)
-            {
-                if (polygon.Name == polygonChoice)
-                {
-                    polygonChoiceNotes = "";
-                    polygonFoundIndicator = true;
-                }
-
-                if (polygonFoundIndicator)
-                {
-                    var polygonDynamic = polygon.Name.ToLower();
-                    DisplayPolygon(polygon.Name, polygonDynamic);
-                }
-            }
-
-            Console.WriteLine("Your polygon ({0}){1} has {2} sides", arg0 : polygonChoice, arg1 : polygonChoiceNotes,
-                arg2 : sideCount);
-
-            return polygonFoundIndicator;
-        }
-
-        public static void DisplayPolygon(string polygonType, dynamic polygon)
-        {
-            var lineNumber = 0;
-            try
-            {
-                Console.WriteLine("{0} Number of Sides: {1}", polygonType, polygon.NumberOfSides);
-                lineNumber++;
-                Console.WriteLine("{0} Side Length: {1}", polygonType, polygon.SideLength);
-                lineNumber++;
-                Console.WriteLine("{0} Perimeter: {1}", polygonType, polygon.GetPerimeter());
-                lineNumber++;
-                Console.WriteLine("{0} Area: {1}", polygonType, Math.Round(polygon.GetArea(), 2));
-                lineNumber++;
-                Console.WriteLine();
-            } catch (Exception ex) {
-                Console.WriteLine("Exception thrown while trying to process {0} at {1}:\n   {2}",
-                    polygonType, lineNumber, ex.GetType().Name);
-                Console.WriteLine();
-            }
-        }
+      
     } // Program
 
 

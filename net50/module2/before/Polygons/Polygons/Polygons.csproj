@@ -16,10 +16,4 @@
     <ProjectReference Include="..\Polygons.Library\Polygons.Library.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="Polygons.Library">
-      <HintPath>..\Polygons.Library\obj\Debug\net5.0\Connection.Library.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
 </Project>

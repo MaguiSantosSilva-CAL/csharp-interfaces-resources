@@ -12,8 +12,10 @@ namespace Polygons
 
         private static int sessionID;
         public int SessionID { get; internal set; }
-        
 
+        private static string? username;
+        public static string? Username { get => username ; set => username = value; }
+                
         protected static int GetNext()
         {
             return sessionID++;
@@ -44,9 +46,18 @@ namespace Polygons
         protected static void Login()
         {
             // Console.WriteLine(access.GetType());  // same as  Console.WriteLine(accessType);
-            if (!UserIsLoggedIn) Console.WriteLine("Please log in to continue.");
+            var welcomeMessage = "Welcome to \n" +
+                "                 _                             \n" +
+                "     _ __   ___ | |_   _  __ _  ___  _ __  ___ \n" +
+                "    | '_ \\ / _ \\| | | | |/ _` |/ _ \\| '_ \\/ __|\n" +
+                "    | |_) | (_) | | |_| | (_| | (_) | | | \\__ \\ \n" +
+                "    | .__/ \\___/|_|\\__, |\\__, |\\___/|_| |_|___/\n" +
+                "    |_|            |___/ |___/                 \n" +
+                "                            \n" +
+                "                   \n";
+            if (!UserIsLoggedIn) Console.WriteLine(welcomeMessage);
 
-            Console.Write("Username: "); var username = Console.ReadLine();
+            Console.Write("Username: "); Username = Console.ReadLine();
             Console.Write("Password: "); var password = GetHiddenConsoleInput();
             Console.WriteLine();
 
@@ -73,13 +84,13 @@ namespace Polygons
             using (sqlConnection)
             {
                 var userInformationFromDatabase = string.Empty;
-                //var cmd = new SqlCommand("SELECT information from polygon.users where username = @Username and pwd = CONVERT(binary,@Password);", sqlConnection);
+                //var cmd = new SqlCommand("SELECT information from polygon.users where username = @Username and pwd = CONVERT(varbinary,@Password);", sqlConnection);
                 var cmd = new SqlCommand("exec usp_userLoginSuccessful @Username, @password", sqlConnection);
 
                 //cmd.Parameters.AddWithValue("@Username", username); 
                 //cmd.Parameters.AddWithValue("@Password", password); //This didn't work because C# passes UTF16 string which converts differently into binary; Latin1 is UTF8.
 
-                cmd.Parameters.AddWithValue("@Username", username);
+                cmd.Parameters.AddWithValue("@Username", Username);
                 cmd.Parameters.Add("@Password", SqlDbType.NVarChar);   //VarChar is UTF8
                 cmd.Parameters["@Password"].Value = password;
 
@@ -121,8 +132,7 @@ namespace Polygons
                 if (UserIsLoggedIn)
                 {
                     Console.WriteLine("Login Successful");
-                    Console.WriteLine("Your Information:");
-                    Console.WriteLine(userInformationFromDatabase);
+                    Console.WriteLine("Your Information:\t" + userInformationFromDatabase);
                 }
                 else
                 {
@@ -130,11 +140,11 @@ namespace Polygons
                     Console.WriteLine(cmd.CommandText);
                     Console.WriteLine();
                     if (!connectionSuccessful) Console.WriteLine(cmd.ExecuteNonQuery());
+                    Console.WriteLine("Connection State {0}", sqlConnection.State);
 
                 }
             }
 
-            Console.WriteLine("Connection State {0}", sqlConnection.State);
         }
 
     }
