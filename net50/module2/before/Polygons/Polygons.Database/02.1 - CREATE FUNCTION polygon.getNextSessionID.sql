@@ -1,3 +1,5 @@
+use maguiss
+GO
 -- ================================================
 -- Template generated from Template Explorer using:
 -- Create Scalar Function (New Menu).SQL
@@ -18,6 +20,12 @@ GO
 -- Create date: 7/10/2021
 -- Description:	Find next SessionID for Polymer
 -- =============================================
+IF (SELECT type from sys.objects where name = 'getNextSessionID' and schema_id = schema_id('polygon')) = 'FN'
+BEGIN
+	DROP FUNCTION polygon.getNextSessionID 
+END
+GO
+
 CREATE FUNCTION polygon.getNextSessionID 
 (			 
 )
@@ -28,7 +36,7 @@ BEGIN
 	DECLARE @nextSessionID int
 
 	-- Add the T-SQL statements to compute the return value here
-	DECLARE @maxSessionID int = (select isnull(max(sessionID),0) from polygon.SessionID)
+	DECLARE @maxSessionID int = (select isnull(max(id),0) from maguiss.polygon.SessionID)
 
 	SET @nextSessionID = @maxSessionID+1
 

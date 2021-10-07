@@ -13,6 +13,7 @@ CREATE TABLE [polygon].[users](
 	,[dateLastLogin]	datetime 
 	,[loginSuccessful]	tinyint			default 0
 	,[sessionID]		int				
+	,[metadata]			[nvarchar](500)
 
  CONSTRAINT [PK_MyUsers] PRIMARY KEY CLUSTERED 
 (

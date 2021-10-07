@@ -7,6 +7,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Polygons", "Polygons\Polygo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Polygons.Library", "Polygons.Library\Polygons.Library.csproj", "{F4D57B94-5054-4739-AFD5-FFADFE8F7E65}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1C37D3B2-6504-455D-AE89-8DA3DFD01C9C}"
+	ProjectSection(SolutionItems) = preProject
+		Polygons.Database\00.0 - SQL CREATE SCHEMA Polygon.sql = Polygons.Database\00.0 - SQL CREATE SCHEMA Polygon.sql
+		Polygons.Database\01.0 - SQL CREATE TABLE polygon.users and populate.sql = Polygons.Database\01.0 - SQL CREATE TABLE polygon.users and populate.sql
+		Polygons.Database\01.1 - SQL CREATE TABLE polygon.sessionID.sql = Polygons.Database\01.1 - SQL CREATE TABLE polygon.sessionID.sql
+		Polygons.Database\01.2 - SQL CREATE TABLE polygon.catalogue.sql = Polygons.Database\01.2 - SQL CREATE TABLE polygon.catalogue.sql
+		Polygons.Database\02.0 - SQL CREATE FUNCTION stringToPassword.sql = Polygons.Database\02.0 - SQL CREATE FUNCTION stringToPassword.sql
+		Polygons.Database\02.1 - CREATE FUNCTION polygon.getNextSessionID.sql = Polygons.Database\02.1 - CREATE FUNCTION polygon.getNextSessionID.sql
+		Polygons.Database\03.0 - SQL CREATE PROCEDURE usp_userLoginSuccessful.sql = Polygons.Database\03.0 - SQL CREATE PROCEDURE usp_userLoginSuccessful.sql
+		Polygons.Database\04.0 - CREATE USER polygoneMaker assign roles.sql = Polygons.Database\04.0 - CREATE USER polygoneMaker assign roles.sql
+		..\..\..\..\..\..\SQL\SQL Server Scripts1\SQL Server Scripts1.ssmssqlproj = ..\..\..\..\..\..\SQL\SQL Server Scripts1\SQL Server Scripts1.ssmssqlproj
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

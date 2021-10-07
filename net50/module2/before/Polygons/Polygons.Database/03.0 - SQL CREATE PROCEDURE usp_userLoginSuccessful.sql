@@ -39,12 +39,20 @@ BEGIN
 
 	SET @password = polygon.fn_stringToPassword(@password)
 
-	UPDATE polygon.users
-	SET dateLastLogin	=	CURRENT_TIMESTAMP,
-		loginSuccessful =	CAST(ISNULL((SELECT 1 from polygon.users where username = @Username and pwd = @password),0) as tinyint)
-	WHERE username = @username
+	BEGIN TRANSACTION
 
-	
+	BEGIN TRY
+		UPDATE polygon.users
+		SET dateLastLogin	=	CURRENT_TIMESTAMP,
+			loginSuccessful =	CAST(ISNULL((SELECT 1 from polygon.users where username = @Username and pwd = @password),0) as tinyint),
+			sessionId = 0 --todo
+			,metadata = CURRENT_USER
+		WHERE username = @username
+
+	END TRY
+	BEGIN CATCH
+		--log error
+	END CATCH
 
 	--SELECT ISNULL(information,'No records found') from polygon.users where username = @username and pwd = @password
 	SELECT information from polygon.users where username = @username and pwd = @password
