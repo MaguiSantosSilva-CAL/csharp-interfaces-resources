@@ -2,6 +2,7 @@ USE maguiss
 GO
 
 select * from polygon.users	
+select * from polygon.sessionID
 
 DECLARE @FIRST  varbinary(100) = (select polygon.fn_stringToPassword('LetMeIn'))
 DECLARE @SECOND varbinary(100) = (select polygon.fn_stringToPassword('letmein'))

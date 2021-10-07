@@ -28,15 +28,19 @@ GO
 
 CREATE FUNCTION polygon.getNextSessionID 
 (			 
+	@username varchar(50) = null
 )
 RETURNS int
 AS
 BEGIN
-	-- Declare the return variable here
+	
 	DECLARE @nextSessionID int
-
-	-- Add the T-SQL statements to compute the return value here
-	DECLARE @maxSessionID int = (select isnull(max(id),0) from maguiss.polygon.SessionID)
+	DECLARE  @maxSessionID int 
+	
+	IF (@username is null)
+		SET @maxSessionID = (select isnull(max(id),0) from maguiss.polygon.SessionID)
+	ELSE
+		SET @maxSessionID = (select sessionID from maguiss.polygon.SessionID where username = @username having max(id))
 
 	SET @nextSessionID = @maxSessionID+1
 

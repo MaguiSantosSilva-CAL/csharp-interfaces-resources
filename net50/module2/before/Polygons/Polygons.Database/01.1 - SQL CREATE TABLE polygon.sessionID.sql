@@ -5,7 +5,7 @@ if exists (select name from sys.objects where name = 'sessionID' and schema_id =
 begin
 	drop table polygon.sessionID
 	create table polygon.sessionID (
-		 iD			int	identity (0,1)	 Primary Key
+		 id			int	identity (0,1)	 Primary Key
 		,sessionID	uniqueidentifier default newid()
 		,username	nvarchar(40)
 	)

@@ -75,7 +75,7 @@ namespace Polygons
             {
                 var userInformationFromDatabase = string.Empty;
                 //var cmd = new SqlCommand("SELECT information from polygon.users where username = @Username and pwd = CONVERT(varbinary,@Password);", sqlConnection);
-                var cmd = new SqlCommand("exec usp_userLoginSuccessful @Username, @password", sqlConnection);
+                var cmd = new SqlCommand("exec usp_attemptLogin @Username, @password", sqlConnection);
 
                 //cmd.Parameters.AddWithValue("@Username", username); 
                 //cmd.Parameters.AddWithValue("@Password", password); //This didn't work because C# passes UTF16 string which converts differently into binary; Latin1 is UTF8.

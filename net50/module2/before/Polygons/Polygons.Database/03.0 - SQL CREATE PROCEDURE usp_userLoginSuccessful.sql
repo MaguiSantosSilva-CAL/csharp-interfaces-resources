@@ -42,10 +42,20 @@ BEGIN
 	BEGIN TRANSACTION
 
 	BEGIN TRY
+
+		-- TODO Test if user is already in an active session
+
+		insert into polygon.sessionID(username) values (@username)
+		
+
 		UPDATE polygon.users
 		SET dateLastLogin	=	CURRENT_TIMESTAMP,
 			loginSuccessful =	CAST(ISNULL((SELECT 1 from polygon.users where username = @Username and pwd = @password),0) as tinyint),
-			sessionId = 0 --todo
+			sessionId = (select sessionID 
+						 from maguiss.polygon.SessionID 
+							where id = (select max(id) 
+										from maguiss.polygon.sessionID 
+										where username = @username))
 			,metadata = CURRENT_USER
 		WHERE username = @username
 
