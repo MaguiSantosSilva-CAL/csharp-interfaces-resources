@@ -46,17 +46,7 @@ namespace Polygons
         protected static void Login()
         {
             // Console.WriteLine(access.GetType());  // same as  Console.WriteLine(accessType);
-            var welcomeMessage = "Welcome to \n" +
-                "                 _                             \n" +
-                "     _ __   ___ | |_   _  __ _  ___  _ __  ___ \n" +
-                "    | '_ \\ / _ \\| | | | |/ _` |/ _ \\| '_ \\/ __|\n" +
-                "    | |_) | (_) | | |_| | (_| | (_) | | | \\__ \\ \n" +
-                "    | .__/ \\___/|_|\\__, |\\__, |\\___/|_| |_|___/\n" +
-                "    |_|            |___/ |___/                 \n" +
-                "                            \n" +
-                "                   \n";
-            if (!UserIsLoggedIn) Console.WriteLine(welcomeMessage);
-
+            
             Console.Write("Username: "); Username = Console.ReadLine();
             Console.Write("Password: "); var password = GetHiddenConsoleInput();
             Console.WriteLine();
@@ -77,7 +67,7 @@ namespace Polygons
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
-                    Console.WriteLine("Connection State {0}", sqlConnection.State);
+                    Console.WriteLine($"Connection State {sqlConnection.State}");
                 }
             }
 
@@ -102,12 +92,12 @@ namespace Polygons
                     sqlDataReader = cmd.ExecuteReader();
                     connectionSuccessful = true;
 
-                    var access = new Access() { SessionID = Access.GetNext() };
-                    Console.WriteLine("Session ID: " + access.SessionID);
 
                     while (sqlDataReader.Read())
                     {
                         UserIsLoggedIn = true;
+                        var access = new Access() { SessionID = Access.GetNext() };
+                        Console.WriteLine("Session ID: " + access.SessionID);
 
                         userInformationFromDatabase = sqlDataReader.IsDBNull(0) ? "No Results" : sqlDataReader.GetString(0);
 

@@ -12,6 +12,17 @@ namespace Polygons
     {
         public static void Main(string[] args)
         {
+            var welcomeMessage = $"Welcome to {Environment.NewLine}" +
+                   "                 _                             \n" +
+                   "     _ __   ___ | |_   _  __ _  ___  _ __  ___ \n" +
+                   "    | '_ \\ / _ \\| | | | |/ _` |/ _ \\| '_ \\/ __|\n" +
+                   "    | |_) | (_) | | |_| | (_| | (_) | | | \\__ \\ \n" +
+                   "    | .__/ \\___/|_|\\__, |\\__, |\\___/|_| |_|___/\n" +
+                   "    |_|            |___/ |___/                 \n" +
+                   "                            \n" +
+                   "                   \n";
+            if (!UserIsLoggedIn) Console.WriteLine(welcomeMessage);
+
             var polygonType = new List<PolygonType>()
             {
                 new PolygonType() {Sides = 4, Name = "square"},
