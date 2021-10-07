@@ -1,0 +1,6 @@
+P:\GitHub\csharp-interfaces-resources\net50\module2\before\Polygons\Polygons\Resources\SQL\00.0 - SQL CREATE SCHEMA Polygon.sql
+P:\GitHub\csharp-interfaces-resources\net50\module2\before\Polygons\Polygons\Resources\SQL\01.0 - SQL CREATE TABLE polygon.users and populate.sql
+P:\GitHub\csharp-interfaces-resources\net50\module2\before\Polygons\Polygons\Resources\SQL\01.1 - SQL CREATE TABLE polygon.sessionID.sql
+P:\GitHub\csharp-interfaces-resources\net50\module2\before\Polygons\Polygons\Resources\SQL\02.0 - SQL CREATE FUNCTION stringToPassword.sql
+P:\GitHub\csharp-interfaces-resources\net50\module2\before\Polygons\Polygons\Resources\SQL\02.1 - CREATE FUNCTION polygon.getNextSessionID.sql
+P:\GitHub\csharp-interfaces-resources\net50\module2\before\Polygons\Polygons\Resources\SQL\03.0 - SQL CREATE PROCEDURE usp_userLoginSuccessful.sql

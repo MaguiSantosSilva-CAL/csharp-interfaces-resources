@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# SQL Server Management Studio Solution File, Format Version 18.00
+VisualStudioVersion = 15.0.28307.421
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DB19F677-7EEE-4BAB-AEA6-DC508FAA161A}"
+	ProjectSection(SolutionItems) = preProject
+		P:\SQL\00.0 - SQL CREATE SCHEMA Polygon.sql = P:\SQL\00.0 - SQL CREATE SCHEMA Polygon.sql
+		P:\SQL\01.0 - SQL CREATE TABLE polygon.users and populate.sql = P:\SQL\01.0 - SQL CREATE TABLE polygon.users and populate.sql
+		P:\SQL\01.1 SQL CREATE TABLE polygon.sessionID.sql = P:\SQL\01.1 SQL CREATE TABLE polygon.sessionID.sql
+		P:\SQL\02.0 - SQL CREATE FUNCTION stringToPassword.sql = P:\SQL\02.0 - SQL CREATE FUNCTION stringToPassword.sql
+		P:\SQL\02.1 CREATE FUNCTION polygon.getNextSessionID.sql = P:\SQL\02.1 CREATE FUNCTION polygon.getNextSessionID.sql
+		P:\SQL\03.0 - SQL CREATE PROCEDURE usp_userLoginSuccessful.sql = P:\SQL\03.0 - SQL CREATE PROCEDURE usp_userLoginSuccessful.sql
+		scratch.sql = scratch.sql
+		P:\SQL\SQL CREATE TABLE userPolygons.sql = P:\SQL\SQL CREATE TABLE userPolygons.sql
+		P:\SQL\SQL CREATE USER polygoneMaker assign roles.sql = P:\SQL\SQL CREATE USER polygoneMaker assign roles.sql
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Default|Default = Default|Default
+		MyConfig|Default = MyConfig|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{342CE296-7B86-4A08-9CA0-6F1BD2D943BE}.Default|Default.ActiveCfg = Default
+		{342CE296-7B86-4A08-9CA0-6F1BD2D943BE}.MyConfig|Default.ActiveCfg = Default
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E5B83960-A449-4A42-989A-7CD7BCD65BFD}
+	EndGlobalSection
+EndGlobal
