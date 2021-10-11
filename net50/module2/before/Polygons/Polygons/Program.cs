@@ -10,7 +10,7 @@ namespace Polygons
 {
     public class Program : Access
     {
-        public static void Main(string[] args)
+        public static void Main()
         {
             var welcomeMessage = $"Welcome to {Environment.NewLine}" +
                    "                 _                             \n" +

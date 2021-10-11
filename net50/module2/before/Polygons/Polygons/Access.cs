@@ -53,7 +53,7 @@ namespace Polygons
 
             var builder = new SqlConnectionStringBuilder(GetConnectionString())
             {
-                ConnectionString = "server=(local);user id=polygonSys;password=bareminimum;"
+                ConnectionString = "server=(local);user id=polygonSystem;password=BareMinimum1;"
             };
 
             var sqlConnection = new SqlConnection(builder.ConnectionString);
@@ -75,7 +75,7 @@ namespace Polygons
             {
                 var userInformationFromDatabase = string.Empty;
                 //var cmd = new SqlCommand("SELECT information from polygon.users where username = @Username and pwd = CONVERT(varbinary,@Password);", sqlConnection);
-                var cmd = new SqlCommand("exec usp_attemptLogin @Username, @password", sqlConnection);
+                var cmd = new SqlCommand("exec [user].login @Username, @password, @verbose=1", sqlConnection);
 
                 //cmd.Parameters.AddWithValue("@Username", username); 
                 //cmd.Parameters.AddWithValue("@Password", password); //This didn't work because C# passes UTF16 string which converts differently into binary; Latin1 is UTF8.
@@ -129,7 +129,7 @@ namespace Polygons
                     Console.WriteLine("Login Failed for " + username + " ({0})", password);
                     Console.WriteLine(cmd.CommandText);
                     Console.WriteLine();
-                    if (!connectionSuccessful) Console.WriteLine(cmd.ExecuteNonQuery());
+                    if (!connectionSuccessful) Console.WriteLine("An error occurred.");
                     Console.WriteLine("Connection State {0}", sqlConnection.State);
 
                 }
