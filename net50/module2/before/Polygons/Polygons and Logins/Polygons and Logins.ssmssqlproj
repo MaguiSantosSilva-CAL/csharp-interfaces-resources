@@ -1,0 +1,131 @@
+<?xml version="1.0"?>
+<SqlWorkbenchSqlProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="Polygons and Logins">
+  <Items>
+    <LogicalFolder Name="Connections" Type="2" Sorted="true">
+      <Items>
+        <ConnectionNode Name="CALALONPC473:CALASTONE\maguiss">
+          <Created>2021-10-07T17:04:45.157183+01:00</Created>
+          <Type>SQL</Type>
+          <Server>CALALONPC473</Server>
+          <UserName />
+          <Authentication>Windows Authentication</Authentication>
+          <InitialDB />
+          <LoginTimeout>30</LoginTimeout>
+          <ExecutionTimeout>0</ExecutionTimeout>
+          <ConnectionProtocol>NotSpecified</ConnectionProtocol>
+          <ApplicationName>Microsoft SQL Server Management Studio - Query</ApplicationName>
+        </ConnectionNode>
+      </Items>
+    </LogicalFolder>
+    <LogicalFolder Name="Queries" Type="0" Sorted="true">
+      <Items>
+        <FileNode Name="00.0 - SQL CREATE SCHEMA Polygon.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>00.0 - SQL CREATE SCHEMA Polygon.sql</FullPath>
+        </FileNode>
+        <FileNode Name="01.0 - SQL CREATE TABLE polygon.users and populate.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:CALALONPC473:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>CALALONPC473</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>01.0 - SQL CREATE TABLE polygon.users and populate.sql</FullPath>
+        </FileNode>
+        <FileNode Name="01.1 - SQL CREATE TABLE polygon.sessionID (2).sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:CALALONPC473:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>CALALONPC473</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>01.1 - SQL CREATE TABLE polygon.sessionID (2).sql</FullPath>
+        </FileNode>
+        <FileNode Name="01.2 - SQL CREATE TABLE polygon.catalogue.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:CALALONPC473:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>CALALONPC473</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>01.2 - SQL CREATE TABLE polygon.catalogue.sql</FullPath>
+        </FileNode>
+        <FileNode Name="02.0 - SQL CREATE FUNCTION stringToPassword.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:CALALONPC473:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>CALALONPC473</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>02.0 - SQL CREATE FUNCTION stringToPassword.sql</FullPath>
+        </FileNode>
+        <FileNode Name="02.1 - CREATE FUNCTION polygon.getNextSessionID.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:CALALONPC473:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>CALALONPC473</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>02.1 - CREATE FUNCTION polygon.getNextSessionID.sql</FullPath>
+        </FileNode>
+        <FileNode Name="02.2 - CREATE FUNCTION polygon.getCreatedSessionID.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:CALALONPC473:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>CALALONPC473</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>02.2 - CREATE FUNCTION polygon.getCreatedSessionID.sql</FullPath>
+        </FileNode>
+        <FileNode Name="02.3 - SQL CREATE FUNCTION polygon.fn_getActiveSessionID.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:CALALONPC473:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>CALALONPC473</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>02.3 - SQL CREATE FUNCTION polygon.fn_getActiveSessionID.sql</FullPath>
+        </FileNode>
+        <FileNode Name="03.0 - SQL CREATE PROCEDURE usp_attemptLogin.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:CALALONPC473:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>CALALONPC473</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>03.0 - SQL CREATE PROCEDURE usp_attemptLogin.sql</FullPath>
+        </FileNode>
+        <FileNode Name="03.1 - SQL CREATE PROCEDURE polygon.usp_SessionCreate.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:CALALONPC473:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>CALALONPC473</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>03.1 - SQL CREATE PROCEDURE polygon.usp_SessionCreate.sql</FullPath>
+        </FileNode>
+        <FileNode Name="04.0 - CREATE USER polygoneMaker assign roles.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:CALALONPC473:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>CALALONPC473</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>04.0 - CREATE USER polygoneMaker assign roles.sql</FullPath>
+        </FileNode>
+        <FileNode Name="05.1 - SQL CREATE VIEW activeSessionsByUser.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:CALALONPC473:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>CALALONPC473</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>05.1 - SQL CREATE VIEW activeSessionsByUser.sql</FullPath>
+        </FileNode>
+        <FileNode Name="scratch.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>scratch.sql</FullPath>
+        </FileNode>
+        <FileNode Name="scratch2.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:CALALONPC473:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>CALALONPC473</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>scratch2.sql</FullPath>
+        </FileNode>
+        <FileNode Name="SQL Selects.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:CALALONPC473:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>CALALONPC473</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>SQL Selects.sql</FullPath>
+        </FileNode>
+        <FileNode Name="XX - DATA Generate random login attempts.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:CALALONPC473:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>CALALONPC473</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>XX - DATA Generate random login attempts.sql</FullPath>
+        </FileNode>
+      </Items>
+    </LogicalFolder>
+    <LogicalFolder Name="Miscellaneous" Type="3" Sorted="true">
+      <Items>
+        <FileNode Name="Polygons and Logins.ssmssqlproj">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Polygons and Logins.ssmssqlproj</FullPath>
+        </FileNode>
+      </Items>
+    </LogicalFolder>
+  </Items>
+</SqlWorkbenchSqlProject>
